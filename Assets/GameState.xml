@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<player location="Room1">
+		<item name="Steel key"/>
+	</player>
+	<location name="Room1">
+		<happens action="Take the key"/>
+	</location>
+</root>

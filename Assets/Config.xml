@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<item name="Disabled lamp">
+		<action name="Turn on lamp">
+			<have item="Oil"/>
+			<spend item="Disabled lamp"/>
+			<give item="Enabled lamp">
+				<description>
+					Now your lamp produces light!
+				</description>
+			</give>
+		</action>
+	</item>
+	<item name="Oil"/>
+	
+	<location name="Room1">
+		<description>
+			You're in the strange unpleasant place: dirty brick walls and two old wooden doors.
+		</description>
+		<action name="Go to the left door" single="false">
+			<go to="Room2"/>
+		</action>
+		<action name="Go to the right door" single="false">
+			<go to="Room3"/>
+		</action>
+		<action name="Take the key">
+			<description>You see a key on a floor.</description>
+			<hidden_description>You can't see properly here - it's too dark.</hidden_description>
+			<have item="Enabled lamp"/>
+		</action>
+	</location>
+	
+	<location name="Room2">
+		<description>
+			It's a small room with a carpet on a wall, chest and table.
+		</description>
+		<action name="Go to the corridor" single="false">
+			<go to="Room1"/>
+		</action>
+		<action name="Inspect the carpet">
+			<text_response>
+				Only dust behind the carpet.
+			</text_response>
+		</action>
+		<action name="Inspect the chest">
+			<text_response>
+				You have unlocked this chest with your key. Here you have found another key.
+			</text_response>
+			<hidden_text_response>
+				It's locked. This big bronze chest is unbreakable with your hands.
+			</hidden_text_response>
+			<take item="Bronze key"/>
+			<give item="Steel key"/>
+		</action>
+		<action name="Inspect the table">
+			<description>You see a table with something on top of it.</description>
+			<give item="Lamp oil"/>
+		</action>
+	</location>
+	
+	<location name="Room3">
+		<description>
+			This place looks like prison - steel door with bars and darkness at the other side.
+		</description>
+		<action name="Go to the corridor" single="false">
+			<go to="Room1"/>
+		</action>
+		<action name="Open the door">
+			<text_response>
+				Now you can go to the other side. Good luck!
+			</text_response>
+			<hidden_text_response>
+				Door is locked.
+			</hidden_text_response>
+			<take item="Steel key"/>
+			<game_over/>
+		</action>
+		<action name="Take the lamp">
+			<description>You see a lamp attached to the wall.</description>
+			<give item="Disabled lamp"/>
+		</action>
+	</location>
+</root>
