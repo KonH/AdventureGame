@@ -1,6 +1,5 @@
-using System.Collections.Generic;
 using System.Xml.Serialization;
-using AdventureGame.Config.Conditions;
+using System.Collections.Generic;
 
 namespace AdventureGame.Config {
 	[XmlType("Config")]

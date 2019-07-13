@@ -1,7 +1,8 @@
+using UnityEngine;
+using System.Linq;
 using System.Collections.Generic;
 using AdventureGame.Config;
 using AdventureGame.State;
-using UnityEngine;
 
 namespace AdventureGame.Core {
 	public class GameLogics {
@@ -9,6 +10,8 @@ namespace AdventureGame.Core {
 		readonly GameState  _state;
 		
 		public GameLogics(ConfigRoot config, GameState state) {
+			Debug.Assert(config != null);
+			Debug.Assert(state != null);
 			_config = config;
 			_state  = state;
 		}
@@ -18,10 +21,24 @@ namespace AdventureGame.Core {
 		}
 		
 		public string GetMainText() {
-			var parts               = new List<string>();
-			var location            = GetPlayerLocationConfig();
-			var locationDescription = location.Description;
-			parts.Add(locationDescription);
+			var parts = new List<string>();
+			AddLocationDescription(parts);
+			AddLocationActionDescriptions(parts);
+			AddItemActionDescriptions(parts);
+			return string.Join("\n", parts.ToArray());
+		}
+
+		public ActionConfig[] GetActionsToDisplay() {
+			return GetActions().Where(t => t.IsActive).Select(t => t.Config).ToArray();
+		}
+
+		void AddLocationDescription(List<string> parts) {
+			var location    = GetPlayerLocationConfig();
+			var description = location.Description;
+			parts.Add(description);
+		}
+		
+		void AddLocationActionDescriptions(List<string> parts) {
 			var actions = GetActions();
 			foreach ( var (action, isActive) in actions ) {
 				var text = isActive ? action.Description : action.HiddenDescription;
@@ -29,14 +46,15 @@ namespace AdventureGame.Core {
 					parts.Add(text);
 				}
 			}
+		}
+
+		void AddItemActionDescriptions(List<string> parts) {
 			foreach ( var text in _state.Player.ActionTexts ) {
 				parts.Add(text);
 			}
-			var str = string.Join("\n", parts.ToArray());
-			return str;
 		}
 
-		public List<(ActionConfig, bool)> GetActions() {
+		List<(ActionConfig Config, bool IsActive)> GetActions() {
 			var result   = new List<(ActionConfig, bool)>();
 			var location = GetPlayerLocationConfig();
 			AddAvailableActions(location.Actions, result);

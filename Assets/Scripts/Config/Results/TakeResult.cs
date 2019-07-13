@@ -2,7 +2,7 @@ using System.Xml.Serialization;
 using AdventureGame.State;
 
 namespace AdventureGame.Config.Results {
-	public class SpendResult : Result {
+	public class TakeResult : Result {
 		[XmlAttribute]
 		public string Item = string.Empty;
 

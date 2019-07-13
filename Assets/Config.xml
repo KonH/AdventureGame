@@ -9,7 +9,8 @@
 						<Have Item="Oil"/>
 					</Conditions>
 					<Results>
-						<Spend Item="Disabled lamp"/>
+						<Take Item="Oil"/>
+						<Take Item="Disabled lamp"/>
 						<Give Item="Enabled lamp"/>
 						<Text>
 							<Value>Now your lamp produces light!</Value>

@@ -1,9 +1,8 @@
-﻿using System.Linq;
+﻿using UnityEngine;
 using AdventureGame.Config;
 using AdventureGame.State;
 using AdventureGame.UI;
 using AdventureGame.Utils;
-using UnityEngine;
 
 namespace AdventureGame.Core {
 	public class GameManager : MonoBehaviour {
@@ -22,9 +21,7 @@ namespace AdventureGame.Core {
 		}
 
 		ConfigRoot LoadConfig() {
-			var text = ConfigAsset.text;
-			var instance = Serialization.Load<ConfigRoot>(text);
-			return instance;
+			return Serialization.Load<ConfigRoot>(ConfigAsset.text);
 		}
 
 		void UpdateState() {
@@ -37,18 +34,22 @@ namespace AdventureGame.Core {
 		}
 
 		void RenderActions() {
-			var actions = _logics.GetActions().Where(t => t.Item2).Select(t => t.Item1).ToArray();
+			var actions = _logics.GetActionsToDisplay();
 			for ( var i = 0; i < SceneSetup.Buttons.Count; i++ ) {
 				var button = SceneSetup.Buttons[i];
 				var isActive = actions.Length > i;
 				button.gameObject.SetActive(isActive);
 				if ( isActive ) {
 					var action = actions[i];
-					button.Text.text = action.Name;
-					button.Button.onClick.RemoveAllListeners();
-					button.Button.onClick.AddListener(() => OnAction(action));
+					InitAction(action, button);
 				}
 			}
+		}
+
+		void InitAction(ActionConfig action, ActionButton button) {
+			button.Text.text = action.Name;
+			button.Button.onClick.RemoveAllListeners();
+			button.Button.onClick.AddListener(() => OnAction(action));
 		}
 
 		void OnAction(ActionConfig action) {
