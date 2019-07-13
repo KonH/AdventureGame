@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace AdventureGame.Config.Conditions {
+namespace AdventureGame.Config {
 	[XmlType("Location")]
 	public class LocationConfig {
 		[XmlAttribute]

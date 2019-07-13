@@ -18,7 +18,10 @@
 				</Action>
 			</Actions>
 		</Item>
+		<Item Name="Enabled lamp"/>
 		<Item Name="Oil"/>
+		<Item Name="Bronze key"/>
+		<Item Name="Steel key"/>
 	</Items>
 	<Locations>
 		<Location Name="Room1">
@@ -42,6 +45,9 @@
 					</Conditions>
 					<Results>
 						<Give Item="Bronze key"/>
+						<Text>
+							<Value>You have found Bronze key.</Value>
+						</Text>
 					</Results>
 				</Action>
 			</Actions>
@@ -81,7 +87,10 @@
 				<Action Name="Inspect the table">
 					<Description>You see a table with something on top of it.</Description>
 					<Results>
-						<Give Item="Lamp oil"/>
+						<Give Item="Oil"/>
+						<Text>
+							<Value>You have found oil for the lamp.</Value>
+						</Text>
 					</Results>
 				</Action>
 			</Actions>
@@ -95,6 +104,9 @@
 					</Results>
 				</Action>
 				<Action Name="Open the door">
+					<Conditions>
+						<Have Item="Steel key"/>
+					</Conditions>
 					<Results>
 						<Text>
 							<Value>Now you can go to the other side. Good luck!</Value>
@@ -112,6 +124,9 @@
 					<Description>You see a lamp attached to the wall.</Description>
 					<Results>
 						<Give Item="Disabled lamp"/>
+						<Text>
+							<Value>Now you have the lamp, but it isn't usefull - no oil inside.</Value>
+						</Text>
 					</Results>
 				</Action>
 			</Actions>
